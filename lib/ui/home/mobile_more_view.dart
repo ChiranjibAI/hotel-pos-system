@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hotel_pos_system/components/style/footer.dart';
 import 'package:hotel_pos_system/components/tutorial.dart';
 import 'package:hotel_pos_system/constants/app_themes.dart';
@@ -31,6 +32,7 @@ class _MobileMoreViewState extends State<MobileMoreView> with AutomaticKeepAlive
             padding: const .only(bottom: 76),
             children: [
               const _HeaderInfoList(),
+              _MoreSectionHeader(title: 'Management'),
               if (!isProd)
                 _buildRouteTile(
                   id: 'debug',
@@ -78,6 +80,7 @@ class _MobileMoreViewState extends State<MobileMoreView> with AutomaticKeepAlive
                 title: S.stockQuantityTitle,
                 subtitle: S.stockQuantityDescription,
               ),
+              _MoreSectionHeader(title: 'Other'),
               _buildRouteTile(
                 id: 'elf',
                 icon: Icons.lightbulb_outlined,
@@ -217,6 +220,28 @@ class _HeaderInfoList extends StatelessWidget {
             Text(title.toString(), style: theme.textTheme.headlineMedium),
             Flexible(child: Text(subtitle, textAlign: .center)),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A section header for the More page — gold uppercase label.
+class _MoreSectionHeader extends StatelessWidget {
+  final String title;
+  const _MoreSectionHeader({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
+      child: Text(
+        title.toUpperCase(),
+        style: GoogleFonts.plusJakartaSans(
+          fontSize: 11,
+          fontWeight: FontWeight.w800,
+          letterSpacing: 1.2,
+          color: BrandColors.gold,
         ),
       ),
     );

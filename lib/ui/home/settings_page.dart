@@ -2,10 +2,12 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:hotel_pos_system/components/sign_in_button.dart';
 import 'package:hotel_pos_system/components/style/outlined_text.dart';
 import 'package:hotel_pos_system/components/style/pop_button.dart';
+import 'package:hotel_pos_system/constants/app_themes.dart';
 import 'package:hotel_pos_system/constants/constant.dart';
 import 'package:hotel_pos_system/routes.dart';
 import 'package:hotel_pos_system/services/auth.dart';
@@ -67,6 +69,8 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
           ),
+          // ===== GENERAL SECTION =====
+          _SectionHeader(title: 'General'),
           ListenableBuilder(
             listenable: ThemeSetting.instance,
             builder: (context, _) {
@@ -93,7 +97,6 @@ class SettingsPage extends StatelessWidget {
               );
             },
           ),
-          const Divider(),
           ListenableBuilder(
             listenable: CheckoutWarningSetting.instance,
             builder: (context, _) {
@@ -121,7 +124,82 @@ class SettingsPage extends StatelessWidget {
               );
             },
           ),
-          const Divider(),
+          // ===== RESTAURANT SECTION =====
+          _SectionHeader(title: 'Restaurant'),
+          // Staff management
+          ListTile(
+            key: const Key('feature.staff'),
+            leading: const Icon(Icons.people_outline),
+            title: const Text('Staff Management'),
+            subtitle: const Text('Add staff, set roles and PINs'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.staff),
+          ),
+          // Reservations
+          ListTile(
+            key: const Key('feature.reservations'),
+            leading: const Icon(Icons.event_available_outlined),
+            title: const Text('Reservations'),
+            subtitle: const Text('Manage table bookings and waitlist'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.reservations),
+          ),
+          // QR Ordering
+          ListTile(
+            key: const Key('feature.qr'),
+            leading: const Icon(Icons.qr_code_outlined),
+            title: const Text('QR Table Ordering'),
+            subtitle: const Text('Generate QR codes for each table'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.qrOrdering),
+          ),
+          // Aggregator Import
+          ListTile(
+            key: const Key('feature.aggregator'),
+            leading: const Icon(Icons.delivery_dining_outlined),
+            title: const Text('Aggregator Import'),
+            subtitle: const Text('Import Zomato/Swiggy orders'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.aggregatorImport),
+          ),
+          // Loyalty Program
+          ListTile(
+            key: const Key('feature.loyalty'),
+            leading: const Icon(Icons.card_giftcard_outlined),
+            title: const Text('Loyalty Program'),
+            subtitle: const Text('Customer points and rewards'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.loyalty),
+          ),
+          // ===== REPORTS & INSIGHTS =====
+          _SectionHeader(title: 'Reports & Insights'),
+          // GST Report
+          ListTile(
+            key: const Key('feature.gst'),
+            leading: const Icon(Icons.receipt_long_outlined),
+            title: const Text('GST Report'),
+            subtitle: const Text('Tax breakdown with CGST/SGST split'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.gstReport),
+          ),
+          // Day-Part Analysis
+          ListTile(
+            key: const Key('feature.daypart'),
+            leading: const Icon(Icons.bar_chart_outlined),
+            title: const Text('Day-Part Analysis'),
+            subtitle: const Text('Hourly sales distribution'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.dayPart),
+          ),
+          // Recipe Costing
+          ListTile(
+            key: const Key('feature.costing'),
+            leading: const Icon(Icons.calculate_outlined),
+            title: const Text('Recipe Costing'),
+            subtitle: const Text('Profit margins per menu item'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.recipeCosting),
+          ),
           ListenableBuilder(
             listenable: CollectEventsSetting.instance,
             builder: (context, _) {
@@ -135,78 +213,6 @@ class SettingsPage extends StatelessWidget {
                 onChanged: (value) => CollectEventsSetting.instance.update(value),
               );
             },
-          ),
-          // Staff management
-          ListTile(
-            key: const Key('feature.staff'),
-            leading: const Icon(Icons.people_outline),
-            title: const Text('Staff Management'),
-            subtitle: const Text('Add staff, set roles and PINs'),
-            trailing: const Icon(Icons.navigate_next_outlined),
-            onTap: () => context.pushNamed(Routes.staff),
-          ),
-          // GST Report
-          ListTile(
-            key: const Key('feature.gst'),
-            leading: const Icon(Icons.receipt_long_outlined),
-            title: const Text('GST Report'),
-            subtitle: const Text('Tax breakdown with CGST/SGST split'),
-            trailing: const Icon(Icons.navigate_next_outlined),
-            onTap: () => context.pushNamed(Routes.gstReport),
-          ),
-          // QR Ordering
-          ListTile(
-            key: const Key('feature.qr'),
-            leading: const Icon(Icons.qr_code_outlined),
-            title: const Text('QR Table Ordering'),
-            subtitle: const Text('Generate QR codes for each table'),
-            trailing: const Icon(Icons.navigate_next_outlined),
-            onTap: () => context.pushNamed(Routes.qrOrdering),
-          ),
-          // Loyalty Program
-          ListTile(
-            key: const Key('feature.loyalty'),
-            leading: const Icon(Icons.card_giftcard_outlined),
-            title: const Text('Loyalty Program'),
-            subtitle: const Text('Customer points and rewards'),
-            trailing: const Icon(Icons.navigate_next_outlined),
-            onTap: () => context.pushNamed(Routes.loyalty),
-          ),
-          // Recipe Costing
-          ListTile(
-            key: const Key('feature.costing'),
-            leading: const Icon(Icons.calculate_outlined),
-            title: const Text('Recipe Costing'),
-            subtitle: const Text('Profit margins per menu item'),
-            trailing: const Icon(Icons.navigate_next_outlined),
-            onTap: () => context.pushNamed(Routes.recipeCosting),
-          ),
-          // Reservations
-          ListTile(
-            key: const Key('feature.reservations'),
-            leading: const Icon(Icons.event_available_outlined),
-            title: const Text('Reservations'),
-            subtitle: const Text('Manage table bookings and waitlist'),
-            trailing: const Icon(Icons.navigate_next_outlined),
-            onTap: () => context.pushNamed(Routes.reservations),
-          ),
-          // Day-Part Analysis
-          ListTile(
-            key: const Key('feature.daypart'),
-            leading: const Icon(Icons.bar_chart_outlined),
-            title: const Text('Day-Part Analysis'),
-            subtitle: const Text('Hourly sales distribution'),
-            trailing: const Icon(Icons.navigate_next_outlined),
-            onTap: () => context.pushNamed(Routes.dayPart),
-          ),
-          // Aggregator Import
-          ListTile(
-            key: const Key('feature.aggregator'),
-            leading: const Icon(Icons.delivery_dining_outlined),
-            title: const Text('Aggregator Import'),
-            subtitle: const Text('Import Zomato/Swiggy orders'),
-            trailing: const Icon(Icons.navigate_next_outlined),
-            onTap: () => context.pushNamed(Routes.aggregatorImport),
           ),
           const SizedBox(height: kFABSpacing),
         ],
@@ -296,5 +302,28 @@ enum Feature {
       .language => LanguageSetting.instance.update(Language.values[index]),
       .checkoutWarning => CheckoutWarningSetting.instance.update(CheckoutWarningTypes.values[index]),
     };
+  }
+}
+
+/// A section header used to group settings entries with visual hierarchy.
+/// Renders as a small gold uppercase label with top/bottom padding.
+class _SectionHeader extends StatelessWidget {
+  final String title;
+  const _SectionHeader({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
+      child: Text(
+        title.toUpperCase(),
+        style: GoogleFonts.plusJakartaSans(
+          fontSize: 11,
+          fontWeight: FontWeight.w800,
+          letterSpacing: 1.2,
+          color: BrandColors.gold,
+        ),
+      ),
+    );
   }
 }

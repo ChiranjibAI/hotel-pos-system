@@ -53,7 +53,7 @@ class _WithTab extends StatelessWidget {
       ),
       body: shell,
       bottomNavigationBar: NavigationBar(
-        selectedIndex: min(shell.currentIndex, 3),
+        selectedIndex: min(shell.currentIndex, _bottomNavTabs.length - 1),
         onDestinationSelected: (index) {
           SpotlightShow.of(context).reset();
           shell.goBranch(
