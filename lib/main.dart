@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 
 import 'app.dart';
 import 'firebase_compatible_options.dart';
-import 'helpers/logger.dart';
+import 'helpers/logger.dart' as logutil;
 import 'models/repository/cashier.dart';
 import 'models/repository/menu.dart';
 import 'models/repository/order_attributes.dart';
@@ -29,6 +29,11 @@ import 'services/storage.dart';
 import 'settings/collect_events_setting.dart';
 import 'settings/settings_provider.dart';
 
+/// Whether Firebase initialised successfully. When false, all Firebase-backed
+/// features (analytics, crashlytics, in-app messaging) are silently skipped so
+/// the offline-first POS still runs without a configured Firebase project.
+bool firebaseAvailable = false;
+
 void main() async {
   // Not all errors are caught by Flutter. Sometimes, errors are instead caught by Zones.
   await runZonedGuarded<Future<void>>(() async {
@@ -36,22 +41,38 @@ void main() async {
     final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    Log.out('start with firebase: ${DefaultFirebaseOptions.currentPlatform.appId}', 'init');
+    // Firebase is optional — the POS is offline-first. If the project isn't
+    // configured (e.g. stub google-services.json), skip Firebase gracefully.
+    try {
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      firebaseAvailable = true;
+      logutil.firebaseAvailable = true;
+      logutil.Log.out('start with firebase: ${DefaultFirebaseOptions.currentPlatform.appId}', 'init');
 
-    // https://firebase.google.com/docs/crashlytics/get-started?platform=flutter&authuser=0&hl=zh-tw#configure-crash-handlers
-    // Pass all uncaught errors from the framework to Crashlytics.
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-      return true;
-    };
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+      PlatformDispatcher.instance.onError = (error, stack) {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        return true;
+      };
 
-    if (kDebugMode) {
-      await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
-      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-      await FirebaseInAppMessaging.instance.setMessagesSuppressed(true);
+      if (kDebugMode) {
+        await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
+        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+        await FirebaseInAppMessaging.instance.setMessagesSuppressed(true);
+      }
+    } catch (e, s) {
+      firebaseAvailable = false;
+      logutil.firebaseAvailable = false;
+      logutil.Log.out('firebase unavailable, running offline: $e', 'init');
+      // Fall back to Flutter's default error handling when Crashlytics is off.
+      FlutterError.onError = (details) {
+        FlutterError.presentError(details);
+        logutil.Log.out(details.exception.toString(), 'flutter_error');
+      };
+      PlatformDispatcher.instance.onError = (error, stack) {
+        logutil.Log.out(error.toString(), 'platform_error');
+        return true;
+      };
     }
 
     await Database.instance.initialize(logWhenQuery: isLocalTest);
@@ -59,7 +80,7 @@ void main() async {
     await Cache.instance.initialize();
 
     SettingsProvider.instance.initialize();
-    Log.allowSendEvents = CollectEventsSetting.instance.value;
+    logutil.Log.allowSendEvents = firebaseAvailable && CollectEventsSetting.instance.value;
 
     await Stock().initialize();
     await Quantities().initialize();
@@ -90,5 +111,11 @@ void main() async {
         child: const App(),
       ),
     );
-  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack, fatal: true));
+  }, (error, stack) {
+    if (firebaseAvailable) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    } else {
+      logutil.Log.out(error.toString(), 'zone_error');
+    }
+  });
 }

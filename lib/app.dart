@@ -7,6 +7,7 @@ import 'package:hotel_pos_system/constants/constant.dart';
 import 'package:hotel_pos_system/l10n/gen/app_localizations.dart';
 
 import 'constants/app_themes.dart';
+import 'main.dart' show firebaseAvailable;
 import 'routes.dart';
 import 'settings/language_setting.dart';
 import 'settings/settings_provider.dart';
@@ -41,7 +42,7 @@ class App extends StatelessWidget {
       // onException: (context, state, route) => context.go('/pos'),
       debugLogDiagnostics: kDebugMode,
       observers: [
-        FirebaseAnalyticsObserver(analytics: .instance),
+        if (firebaseAvailable) FirebaseAnalyticsObserver(analytics: .instance),
         routeObserver,
       ],
     );

@@ -5,6 +5,10 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hotel_pos_system/constants/constant.dart';
 
+/// Whether Firebase services are available. Set from main.dart. When false,
+/// all Firebase calls in this logger are skipped so the app runs offline.
+bool firebaseAvailable = false;
+
 const _isDebug = kDebugMode || isLocalTest;
 
 class Log {
@@ -19,7 +23,7 @@ class Log {
     final message = parameters?.entries.map((e) => '${e.key}=${e.value}').join(' ');
     Log.out(message ?? '', event);
 
-    if (forceSend || allowSendEvents) {
+    if (firebaseAvailable && (forceSend || allowSendEvents)) {
       final Map<String, Object> filtered = <String, Object>{};
       parameters?.forEach((String key, Object? value) {
         if (value != null) {
@@ -38,7 +42,7 @@ class Log {
     }());
     out(error.toString(), code, error: error, stackTrace: stackTrace);
 
-    if (forceSend || allowSendEvents) {
+    if (firebaseAvailable && (forceSend || allowSendEvents)) {
       FirebaseCrashlytics.instance.recordError(error, stackTrace, reason: code);
     }
   }

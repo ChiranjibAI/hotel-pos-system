@@ -1,10 +1,13 @@
 plugins {
   id "com.android.application"
-    // START: FlutterFire Configuration
-  id "com.google.gms.google-services"
-  id "com.google.firebase.crashlytics"
-  id 'com.google.firebase.firebase-perf'
-    // END: FlutterFire Configuration
+    // Firebase plugins disabled — the app is offline-first and Firebase is
+    // optional. Re-enable these (and add a real google-services.json) when you
+    // set up a Firebase project for analytics/crashlytics.
+    // START: FlutterFire Configuration (disabled)
+  // id "com.google.gms.google-services"
+  // id "com.google.firebase.crashlytics"
+  // id 'com.google.firebase.firebase-perf'
+    // END: FlutterFire Configuration (disabled)
   id "kotlin-android"
   id "dev.flutter.flutter-gradle-plugin"
 }
@@ -104,5 +107,5 @@ dependencies {
   implementation "androidx.multidex:multidex:2.0.1"
 }
 
-// This must appear at the bottom of the file
-apply plugin: 'com.google.firebase.crashlytics'
+// Firebase Crashlytics plugin disabled (offline-first build)
+// apply plugin: 'com.google.firebase.crashlytics'
