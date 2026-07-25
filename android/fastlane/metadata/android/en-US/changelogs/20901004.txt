@@ -1,0 +1,6 @@
+🚀 Features
+
+• Multiple languages #205 : yourname
+• Replenish by money #206 : yourname
+• Product's ingredients are order-able :  yourname
+

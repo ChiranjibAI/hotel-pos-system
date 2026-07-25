@@ -1,0 +1,85 @@
+import 'package:excel/excel.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:hotel_pos_system/models/repository/menu.dart';
+import 'package:hotel_pos_system/models/repository/order_attributes.dart';
+import 'package:hotel_pos_system/models/repository/quantities.dart';
+import 'package:hotel_pos_system/models/repository/replenisher.dart';
+import 'package:hotel_pos_system/models/repository/stock.dart';
+import 'package:hotel_pos_system/models/stock/quantity.dart';
+import 'package:hotel_pos_system/translator.dart';
+import 'package:hotel_pos_system/ui/transit/exporter/plain_text_exporter.dart';
+import 'package:hotel_pos_system/ui/transit/formatter/formatter.dart';
+import 'package:hotel_pos_system/ui/transit/transit_station.dart';
+
+import '../../../mocks/mock_storage.dart';
+import '../../../test_helpers/file_mocker.dart';
+import '../../../test_helpers/translator.dart';
+
+void main() {
+  group('Transit - Excel - Import Basic', () {
+    Widget buildApp() {
+      return const MaterialApp(
+        home: TransitStation(exporter: PlainTextExporter(), catalog: .importModel, method: .excel),
+      );
+    }
+
+    testWidgets('successfully', (tester) async {
+      final picker = mockFilePicker();
+
+      final excel = Excel.createExcel();
+      final sheet = excel[FormattableModel.quantities.l10nName];
+      sheet.appendRow([TextCellValue('name'), TextCellValue('defaultProportion')]);
+      sheet.appendRow([TextCellValue('q1'), const IntCellValue(1)]);
+      mockFilePick(picker, bytes: excel.encode());
+
+      Quantities.instance.replaceItems({'q1': Quantity(id: 'q1', name: 'q1')});
+
+      await tester.pumpWidget(buildApp());
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('transit.model_picker')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('transit.model_picker.quantities')), warnIfMissed: false);
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byIcon(Icons.file_present_sharp));
+      await tester.pumpAndSettle();
+
+      // allow import
+      await tester.tap(find.byKey(const Key('transit.import.confirm')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('confirm_dialog.confirm')));
+      await tester.pumpAndSettle();
+
+      verify(storage.add(any, any, {'name': 'q1', 'defaultProportion': 1}));
+    });
+
+    testWidgets('abort picking', (tester) async {
+      final picker = mockFilePicker();
+      mockFilePick(picker);
+
+      await tester.pumpWidget(buildApp());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byIcon(Icons.file_present_sharp));
+      await tester.pumpAndSettle();
+
+      expect(find.text(S.transitImportErrorExcelPickFile), findsOneWidget);
+    });
+
+    setUpAll(() {
+      initializeTranslator();
+      initializeStorage();
+      initializeFileSystem();
+    });
+
+    setUp(() {
+      Menu();
+      Stock();
+      Quantities();
+      Replenisher();
+      OrderAttributes();
+    });
+  });
+}

@@ -1,0 +1,38 @@
+{
+  "cSpell.words": [
+    "autofocus",
+    "avator",
+    "crashlytics",
+    "cupertino",
+    "firestore",
+    "Formattable",
+    "fullscreen",
+    "googleapis",
+    "Imageable",
+    "Ingr",
+    "Linkify",
+    "loadmore",
+    "LTRB",
+    "mockito",
+    "hotel_pos_system",
+    "pubspec",
+    "reloadable",
+    "reorderable",
+    "sembast",
+    "signin",
+    "sqflite",
+    "sublist",
+    "syncfusion",
+    "unfocus",
+    "upgrader",
+    "vsync",
+    "wakelock",
+    "xfile"
+  ],
+  "files.associations": {
+    "*.arb": "json"
+  },
+  "yaml.schemas": {
+    ".vscode/arb.schema.json": ["/assets/l10n/**/*.yaml"]
+  }
+}
