@@ -1,0 +1,25 @@
+Hotel POS System v3.0 — Premium Release
+
+NEW PREMIUM DESIGN
+- Dark charcoal + gold theme, Plus Jakarta Sans typography
+- Custom branded logo + app icon + splash screen
+- Three themes: Dark, AMOLED black, Light
+
+ONBOARDING & USABILITY
+- First-run setup wizard (language, currency, restaurant name)
+- "Load sample restaurant" option to explore with demo data
+- KPI dashboard cards (today's revenue, orders, average order value)
+- Premium empty states with branded illustrations
+- Haptic feedback on order add/remove
+
+RESTAURANT FEATURES
+- Table Management: visual floor plan with color-coded status
+  (available, occupied, reserved, cleaning)
+- Kitchen Order Ticket (KOT): kitchen-only receipt, no prices
+- Split Payment: Cash / Card / UPI with tip and change calculation
+
+TECHNICAL PREMIUM
+- Friendly error screen instead of debug crash page
+- Automatic local backup every 12 hours (JSON, on-device)
+- In-app error log viewer (offline Crashlytics alternative)
+- Offline-first: no internet required, no cloud account, no subscription

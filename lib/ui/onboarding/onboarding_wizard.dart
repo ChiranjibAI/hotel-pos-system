@@ -5,6 +5,9 @@ import 'package:hotel_pos_system/constants/app_themes.dart';
 import 'package:hotel_pos_system/services/cache.dart';
 import 'package:hotel_pos_system/settings/currency_setting.dart';
 import 'package:hotel_pos_system/settings/language_setting.dart';
+import 'package:hotel_pos_system/helpers/setup_example.dart';
+import 'package:hotel_pos_system/models/repository/tables.dart';
+import 'package:hotel_pos_system/models/restaurant/table.dart';
 
 /// First-run onboarding wizard.
 ///
@@ -29,6 +32,7 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
   int _currentPage = 0;
   Language _selectedLanguage = Language.en;
   CurrencyTypes _selectedCurrency = CurrencyTypes.usd;
+  bool _useSampleData = false;
 
   static const _totalPages = 4;
 
@@ -65,6 +69,25 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
     // Save restaurant name
     if (_nameController.text.trim().isNotEmpty) {
       await Cache.instance.set<String>('restaurant.name', _nameController.text.trim());
+    }
+
+    // Load sample restaurant data if the user opted in.
+    if (_useSampleData) {
+      try {
+        await setupExampleMenu();
+        // Add a few sample tables so the floor plan isn't empty.
+        for (var i = 1; i <= 6; i++) {
+          await Tables.instance.addItem(RestaurantTable(
+            name: 'T$i',
+            seats: 4,
+            gridX: (i - 1) % 3,
+            gridY: (i - 1) ~/ 3,
+            tableStatus: i <= 2 ? TableStatus.available : (i == 3 ? TableStatus.occupied : TableStatus.available),
+          ));
+        }
+      } catch (e) {
+        // Sample data is best-effort — don't block onboarding on failure.
+      }
     }
 
     // Mark onboarding complete
@@ -211,18 +234,27 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
       icon: Icons.storefront_rounded,
       title: 'What\'s your restaurant called?',
       subtitle: 'This name appears on receipts and reports.',
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: TextField(
-          controller: _nameController,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.plusJakartaSans(fontSize: 20, fontWeight: FontWeight.w600),
-          decoration: const InputDecoration(
-            hintText: 'e.g. Spice Garden',
-            contentPadding: EdgeInsets.symmetric(vertical: 18),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: TextField(
+              controller: _nameController,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.plusJakartaSans(fontSize: 20, fontWeight: FontWeight.w600),
+              decoration: const InputDecoration(
+                hintText: 'e.g. Spice Garden',
+                contentPadding: EdgeInsets.symmetric(vertical: 18),
+              ),
+              onSubmitted: (_) => _nextPage(),
+            ),
           ),
-          onSubmitted: (_) => _nextPage(),
-        ),
+          const SizedBox(height: 16),
+          _SampleDataToggle(
+            value: _useSampleData,
+            onChanged: (v) => setState(() => _useSampleData = v),
+          ),
+        ],
       ),
     );
   }
@@ -350,6 +382,81 @@ class _OptionTile extends StatelessWidget {
                   const Icon(Icons.check_circle, color: BrandColors.gold, size: 24)
                 else
                   Icon(Icons.radio_button_unchecked, color: Colors.white24, size: 24),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A toggle that lets the user opt into loading a sample restaurant
+/// (menu, ingredients, tables) so they can explore the app before entering
+/// their own data.
+class _SampleDataToggle extends StatelessWidget {
+  final bool value;
+  final ValueChanged<bool> onChanged;
+  const _SampleDataToggle({required this.value, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Material(
+        color: value
+            ? BrandColors.gold.withValues(alpha: 0.12)
+            : Theme.of(context).cardTheme.color,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: () {
+            HapticFeedback.selectionClick();
+            onChanged(!value);
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: value ? BrandColors.gold : Colors.transparent,
+                width: 1.5,
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.restaurant_menu, color: value ? BrandColors.gold : null, size: 24),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Load sample restaurant',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Start with a demo menu, ingredients, and 6 tables to explore the app.',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 12,
+                          color: Theme.of(context).textTheme.bodySmall?.color,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Switch(
+                  value: value,
+                  onChanged: (v) {
+                    HapticFeedback.selectionClick();
+                    onChanged(v);
+                  },
+                ),
               ],
             ),
           ),

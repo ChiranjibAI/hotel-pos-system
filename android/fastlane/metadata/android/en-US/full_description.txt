@@ -1,17 +1,36 @@
-Order and Checkout System
-This is an offline point-of-sale (POS) system that uses local files as its database.
-This allows users to operate the system without an internet connection, and it not only stores order data but also allows for the configuration of inventory management and other functions.
-This system is completely open source (free). If you are a programmer or anyone who wants to make this product better, you are welcome to visit the relevant website:
+Hotel POS System is a premium, offline-first point-of-sale app built for restaurants, cafés, and small food businesses. Designed to run entirely on your device — no internet required, no monthly fees, no cloud account.
 
-https://github.com/yourname/hotel-pos-system
+◆ WORKS FULLY OFFLINE
+All your data — menu, orders, inventory, tables, reports — stays on your device. No internet needed, no server to maintain, no subscription. Your business data never leaves your phone.
 
-♦ Features:
+◆ TABLE MANAGEMENT
+Visual floor plan with color-coded table status (available, occupied, reserved, cleaning). Tap to update status, add tables, and track seat counts. Know your floor at a glance.
 
-• Menu: Users can directly edit the menu, including the catalog, price, cost, and ingredients of each product.
-• Inventory Tracking: Set inventory levels for each dish. Each order is automatically subtracted from the inventory.
-• Ordering: Includes useful features such as order queue and quick order amount calculation.
-• Cash Register: Helps reconcile daily orders and calculate the correct amount of cash due after an order is placed.
-• Customer Details: Customize customer options such as takeout, dine-in, gender, age, etc.
-• Data Backup: Back up order, menu, and other information to Google Sheets.
-• Chart Analysis: Create custom charts for intuitive analysis and statistics.
-• Printer: Print receipts via Bluetooth connection.
+◆ KITCHEN ORDER TICKETS (KOT)
+Send order tickets to the kitchen with items and quantities only — no prices. The kitchen sees what to cook, the customer sees the bill. Standard restaurant workflow, built in.
+
+◆ SPLIT PAYMENT
+Split the bill across Cash, Card, and UPI. Add a tip, track remaining balance, and confirm when fully covered. Perfect for group dining and multi-method payments.
+
+◆ INVENTORY TRACKING
+Track ingredients and stock levels. Each order automatically deducts from inventory. Get low-stock alerts so you never run out during service.
+
+◆ CASH REGISTER
+Daily cash reconciliation with change calculation. Supports multiple currencies and denominations.
+
+◆ SALES ANALYTICS
+Real-time KPI dashboard — today's revenue, order count, average order value. Custom charts for trends, top items, and performance over time.
+
+◆ BLUETOOTH RECEIPT PRINTER
+Print receipts via Bluetooth thermal printers. Supports XPrinter (XP-58/76/80), Yokoscan, and CatPrinter/MHT protocols. ESC/POS compatible.
+
+◆ DATA BACKUP
+Automatic local backups every 12 hours. Export to CSV, Excel, or Google Sheets. Your data is always safe.
+
+◆ PREMIUM DESIGN
+Dark charcoal + gold theme designed for restaurant environments. Plus Jakarta Sans typography. Three theme variants (dark, AMOLED black, light). Built to look professional in front of customers.
+
+◆ PRIVACY FIRST
+No personal data collected. No analytics tracking. No ads. The app is completely offline — what happens in your restaurant stays in your restaurant.
+
+Built for restaurants that want a professional POS without the monthly fees.

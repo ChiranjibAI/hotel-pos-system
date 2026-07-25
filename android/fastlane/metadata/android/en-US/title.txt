@@ -1,1 +1,1 @@
-Hotel POS System - Order & Checkout
+Hotel POS System
