@@ -61,6 +61,8 @@ import 'package:hotel_pos_system/ui/tables/tables_page.dart';
 import 'package:hotel_pos_system/ui/staff/staff_management_page.dart';
 import 'package:hotel_pos_system/ui/qr/qr_ordering_page.dart';
 import 'package:hotel_pos_system/ui/reports/gst_report_page.dart';
+import 'package:hotel_pos_system/ui/loyalty/loyalty_page.dart';
+import 'package:hotel_pos_system/ui/costing/recipe_costing_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_station.dart';
 
@@ -147,6 +149,8 @@ class Routes {
                       _staffRoute(inShell: false),
                       _gstReportRoute(inShell: false),
                       _qrOrderingRoute(inShell: false),
+                      _loyaltyRoute(inShell: false),
+                      _recipeCostingRoute(inShell: false),
                       _elfRoute(inShell: false),
                       _transitRoute(inShell: false),
                       _settingsRoute(inShell: false),
@@ -550,6 +554,20 @@ class Routes {
     builder: (ctx, state) => _w(_l(const QrOrderingPage(), state), 'QR Ordering'),
   );
 
+  static GoRoute _loyaltyRoute({required bool inShell}) => GoRoute(
+    name: loyalty,
+    path: '${(inShell ? '_/' : '')}loyalty',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const LoyaltyPage(), state), 'Loyalty Program'),
+  );
+
+  static GoRoute _recipeCostingRoute({required bool inShell}) => GoRoute(
+    name: recipeCosting,
+    path: '${(inShell ? '_/' : '')}costing',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const RecipeCostingPage(), state), 'Recipe Costing'),
+  );
+
   static GoRoute _printerRoute({required bool inShell}) => GoRoute(
     name: printer,
     path: '${(inShell ? '_/' : '')}printer',
@@ -706,6 +724,8 @@ class Routes {
   static const staff = 'staff';
   static const gstReport = 'gstReport';
   static const qrOrdering = 'qrOrdering';
+  static const loyalty = 'loyalty';
+  static const recipeCosting = 'recipeCosting';
   static const menu = 'menu';
   static const menuCatalogCreate = 'menu.catalog.create';
   static const menuCatalogUpdate = 'menu.catalog.update';

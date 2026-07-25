@@ -163,6 +163,24 @@ class SettingsPage extends StatelessWidget {
             trailing: const Icon(Icons.navigate_next_outlined),
             onTap: () => context.pushNamed(Routes.qrOrdering),
           ),
+          // Loyalty Program
+          ListTile(
+            key: const Key('feature.loyalty'),
+            leading: const Icon(Icons.card_giftcard_outlined),
+            title: const Text('Loyalty Program'),
+            subtitle: const Text('Customer points and rewards'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.loyalty),
+          ),
+          // Recipe Costing
+          ListTile(
+            key: const Key('feature.costing'),
+            leading: const Icon(Icons.calculate_outlined),
+            title: const Text('Recipe Costing'),
+            subtitle: const Text('Profit margins per menu item'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.recipeCosting),
+          ),
           const SizedBox(height: kFABSpacing),
         ],
       ),
