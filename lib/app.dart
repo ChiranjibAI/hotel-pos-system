@@ -5,6 +5,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hotel_pos_system/constants/constant.dart';
 import 'package:hotel_pos_system/l10n/gen/app_localizations.dart';
+import 'package:hotel_pos_system/services/cache.dart';
 
 import 'constants/app_themes.dart';
 import 'main.dart' show firebaseAvailable;
@@ -13,8 +14,9 @@ import 'settings/language_setting.dart';
 import 'settings/settings_provider.dart';
 import 'settings/theme_setting.dart';
 import 'translator.dart';
+import 'ui/onboarding/onboarding_wizard.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   static final routeObserver = RouteObserver<ModalRoute<void>>();
 
   static final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
@@ -26,9 +28,11 @@ class App extends StatelessWidget {
 
   const App({super.key}); // coverage:ignore-line
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  State<App> createState() => _AppState();
+
+  // This widget is the root of your application.
+  static Widget _buildApp(BuildContext context) {
     final routes = Routes.getDesiredRoute(MediaQuery.sizeOf(context).width);
     routingConfig ??= ValueNotifier(routes);
     routingConfig!.value = routes;
@@ -36,10 +40,6 @@ class App extends StatelessWidget {
       initialLocation: Routes.initLocation,
       routingConfig: routingConfig!,
       navigatorKey: Routes.rootNavigatorKey,
-      // By default, go_router comes with default error screens for both
-      // MaterialApp and CupertinoApp as well as a default error screen in
-      // the case that none is used.
-      // onException: (context, state, route) => context.go('/pos'),
       debugLogDiagnostics: kDebugMode,
       observers: [
         if (firebaseAvailable) FirebaseAnalyticsObserver(analytics: .instance),
@@ -47,10 +47,6 @@ class App extends StatelessWidget {
       ],
     );
 
-    // Glue the SettingsController to the MaterialApp.
-    //
-    // The AnimatedBuilder Widget listens to the SettingsController for changes.
-    // Whenever the user updates their settings, the MaterialApp is rebuilt.
     return AnimatedBuilder(
       animation: SettingsProvider.instance,
       builder: (context, child) {
@@ -58,14 +54,9 @@ class App extends StatelessWidget {
           routerConfig: router!,
           scaffoldMessengerKey: scaffoldMessengerKey,
           onGenerateTitle: (context) {
-            // According to document, it should followed when system changed language.
-            // https://docs.flutter.dev/development/accessibility-and-localization/internationalization#specifying-the-apps-supportedlocales-parameter
             final localizations = AppLocalizations.of(context)!;
 
             setAppLocalizations(localizations);
-            // if no setup language, it will use system language. We try to
-            // catch system language here. Only first time calling will take
-            // effect.
             LanguageSetting.instance.systemLanguage = S.localeName;
 
             FlutterNativeSplash.remove();
@@ -73,22 +64,48 @@ class App extends StatelessWidget {
             return localizations.appTitle;
           },
           debugShowCheckedModeBanner: !isProd,
-
-          // Provide the generated AppLocalizations to the MaterialApp. This
-          // allows descendant Widgets to display the correct translations
-          // depending on the user's locale.
           locale: LanguageSetting.instance.value?.locale,
           supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
-
-          // Define a light and dark color theme. Then, read the user's
-          // preferred ThemeMode (light, dark, or system default) from the
-          // SettingsController to display the correct theme.
           theme: AppThemes.lightTheme,
           darkTheme: AppThemes.darkTheme,
           themeMode: ThemeSetting.instance.value,
         );
       },
     );
+  }
+}
+
+class _AppState extends State<App> {
+  bool _showOnboarding = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Check if onboarding has been completed. The check runs after the first
+    // frame so the splash screen is visible while we read from the cache.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final completed = Cache.instance.get<bool>('onboarding.completed') ?? false;
+      if (mounted && !completed) {
+        FlutterNativeSplash.remove();
+        setState(() => _showOnboarding = true);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_showOnboarding) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: !isProd,
+        theme: AppThemes.darkTheme,
+        home: OnboardingWizard(
+          onComplete: () {
+            setState(() => _showOnboarding = false);
+          },
+        ),
+      );
+    }
+    return App._buildApp(context);
   }
 }

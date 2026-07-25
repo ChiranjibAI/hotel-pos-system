@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hotel_pos_system/helpers/logger.dart';
 import 'package:hotel_pos_system/helpers/util.dart';
 import 'package:hotel_pos_system/models/menu/product.dart';
@@ -94,6 +95,7 @@ class Cart extends ChangeNotifier {
 
   /// Add [product] to the cart.
   void add(Product product) {
+    HapticFeedback.lightImpact();
     final p = CartProduct(product, isSelected: true);
     products.add(p);
 
@@ -262,6 +264,7 @@ class Cart extends ChangeNotifier {
 
   /// Remove specific product
   void removeAt(int index) {
+    HapticFeedback.selectionClick();
     products.removeAt(index);
 
     updateSelection();

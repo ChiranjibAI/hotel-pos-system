@@ -13,6 +13,7 @@ import 'package:hotel_pos_system/translator.dart';
 import 'package:hotel_pos_system/ui/analysis/widgets/chart_card_view.dart';
 import 'package:hotel_pos_system/ui/analysis/widgets/chart_range_page.dart';
 import 'package:hotel_pos_system/ui/analysis/widgets/goals_card_view.dart';
+import 'package:hotel_pos_system/ui/analysis/widgets/kpi_dashboard.dart';
 
 class AnalysisView extends StatefulWidget {
   const AnalysisView({super.key});
@@ -45,6 +46,9 @@ class _AnalysisViewState extends State<AnalysisView> with AutomaticKeepAliveClie
                     title: Text(S.analysisChartTitle),
                     actions: const [_MoreButton()],
                   ),
+                  // KPI summary cards — today's revenue, orders, avg order
+                  const SliverToBoxAdapter(child: KpiDashboard()),
+                  SliverToBoxAdapter(child: SizedBox(height: 8)),
                   _buildChartHeader(),
                   _buildCharts(Analysis.instance.itemList, bp),
                 ],
