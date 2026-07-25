@@ -52,6 +52,9 @@ dependencies:
   cached_network_image: ^3.4.1  # 24, 08-13, downgrade for firebase
   flutter_svg: ^2.2.1  # 25, 06-16
   google_fonts: ^6.2.1
+  qr_flutter: ^4.1.0
+  pdf: ^3.11.2
+  printing: ^5.14.2
 
   # Make it easy to test
   file: ^7.0.1  # 24, 10-08

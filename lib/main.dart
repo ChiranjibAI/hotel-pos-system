@@ -30,6 +30,7 @@ import 'services/database.dart';
 import 'services/storage.dart';
 import 'services/backup_service.dart';
 import 'services/error_reporter.dart';
+import 'services/cloud_sync_service.dart';
 import 'settings/collect_events_setting.dart';
 import 'settings/settings_provider.dart';
 
@@ -102,6 +103,9 @@ void main() async {
 
     // Start the local auto-backup service (runs every 12h + once 30s after launch).
     BackupService.instance.start();
+
+    // Start cloud sync if Supabase credentials are configured (no-op otherwise).
+    CloudSyncService.instance.start();
 
     /// Why use provider?
     /// https://stackoverflow.com/questions/57157823/provider-vs-inheritedwidget

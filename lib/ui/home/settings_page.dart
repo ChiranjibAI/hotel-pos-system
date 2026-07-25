@@ -145,6 +145,24 @@ class SettingsPage extends StatelessWidget {
             trailing: const Icon(Icons.navigate_next_outlined),
             onTap: () => context.pushNamed(Routes.staff),
           ),
+          // GST Report
+          ListTile(
+            key: const Key('feature.gst'),
+            leading: const Icon(Icons.receipt_long_outlined),
+            title: const Text('GST Report'),
+            subtitle: const Text('Tax breakdown with CGST/SGST split'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.gstReport),
+          ),
+          // QR Ordering
+          ListTile(
+            key: const Key('feature.qr'),
+            leading: const Icon(Icons.qr_code_outlined),
+            title: const Text('QR Table Ordering'),
+            subtitle: const Text('Generate QR codes for each table'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.qrOrdering),
+          ),
           const SizedBox(height: kFABSpacing),
         ],
       ),
