@@ -126,6 +126,33 @@ class SettingsPage extends StatelessWidget {
           ),
           // ===== RESTAURANT SECTION =====
           _SectionHeader(title: 'Restaurant'),
+          // UPI Payment
+          ListTile(
+            key: const Key('feature.upi'),
+            leading: const Icon(Icons.qr_code_outlined),
+            title: const Text('UPI Payment'),
+            subtitle: const Text('Accept UPI payments with zero fees'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.upiSettings),
+          ),
+          // Kitchen Display
+          ListTile(
+            key: const Key('feature.kitchen'),
+            leading: const Icon(Icons.restaurant_outlined),
+            title: const Text('Kitchen Display'),
+            subtitle: const Text('Live order queue for the kitchen'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.kitchenDisplay),
+          ),
+          // Voice Ordering
+          ListTile(
+            key: const Key('feature.voice'),
+            leading: const Icon(Icons.mic_outlined),
+            title: const Text('Voice Ordering'),
+            subtitle: const Text('Speak the order, app parses it'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.voiceOrdering),
+          ),
           // Staff management
           ListTile(
             key: const Key('feature.staff'),
@@ -173,6 +200,24 @@ class SettingsPage extends StatelessWidget {
           ),
           // ===== REPORTS & INSIGHTS =====
           _SectionHeader(title: 'Reports & Insights'),
+          // Daily Sales Report
+          ListTile(
+            key: const Key('feature.daily'),
+            leading: const Icon(Icons.today_outlined),
+            title: const Text('Daily Sales Report'),
+            subtitle: const Text('Today\'s summary, share to WhatsApp'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.dailyReport),
+          ),
+          // Menu Engineering
+          ListTile(
+            key: const Key('feature.eng'),
+            leading: const Icon(Icons.analytics_outlined),
+            title: const Text('Menu Engineering'),
+            subtitle: const Text('Stars, Plowhorses, Dogs, Puzzles'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.menuEngineering),
+          ),
           // GST Report
           ListTile(
             key: const Key('feature.gst'),

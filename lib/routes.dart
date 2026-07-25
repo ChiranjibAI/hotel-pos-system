@@ -66,6 +66,11 @@ import 'package:hotel_pos_system/ui/costing/recipe_costing_page.dart';
 import 'package:hotel_pos_system/ui/reservations/reservations_page.dart';
 import 'package:hotel_pos_system/ui/reports/day_part_page.dart';
 import 'package:hotel_pos_system/ui/aggregator/aggregator_import_page.dart';
+import 'package:hotel_pos_system/ui/upi/upi_settings_page.dart';
+import 'package:hotel_pos_system/ui/reports/daily_report_page.dart';
+import 'package:hotel_pos_system/ui/reports/menu_engineering_page.dart';
+import 'package:hotel_pos_system/ui/kitchen/kitchen_display_page.dart';
+import 'package:hotel_pos_system/ui/voice/voice_ordering_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_station.dart';
 
@@ -157,6 +162,11 @@ class Routes {
                       _reservationsRoute(inShell: false),
                       _dayPartRoute(inShell: false),
                       _aggregatorImportRoute(inShell: false),
+                      _upiSettingsRoute(inShell: false),
+                      _dailyReportRoute(inShell: false),
+                      _menuEngineeringRoute(inShell: false),
+                      _kitchenDisplayRoute(inShell: false),
+                      _voiceOrderingRoute(inShell: false),
                       _elfRoute(inShell: false),
                       _transitRoute(inShell: false),
                       _settingsRoute(inShell: false),
@@ -595,6 +605,41 @@ class Routes {
     builder: (ctx, state) => _w(_l(const AggregatorImportPage(), state), 'Aggregator Import'),
   );
 
+  static GoRoute _upiSettingsRoute({required bool inShell}) => GoRoute(
+    name: upiSettings,
+    path: '${(inShell ? '_/' : '')}upi',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const UpiSettingsPage(), state), 'UPI Settings'),
+  );
+
+  static GoRoute _dailyReportRoute({required bool inShell}) => GoRoute(
+    name: dailyReport,
+    path: '${(inShell ? '_/' : '')}daily-report',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const DailyReportPage(), state), 'Daily Report'),
+  );
+
+  static GoRoute _menuEngineeringRoute({required bool inShell}) => GoRoute(
+    name: menuEngineering,
+    path: '${(inShell ? '_/' : '')}menu-engineering',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const MenuEngineeringPage(), state), 'Menu Engineering'),
+  );
+
+  static GoRoute _kitchenDisplayRoute({required bool inShell}) => GoRoute(
+    name: kitchenDisplay,
+    path: '${(inShell ? '_/' : '')}kitchen',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const KitchenDisplayPage(), state), 'Kitchen Display'),
+  );
+
+  static GoRoute _voiceOrderingRoute({required bool inShell}) => GoRoute(
+    name: voiceOrdering,
+    path: '${(inShell ? '_/' : '')}voice',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const VoiceOrderingPage(), state), 'Voice Ordering'),
+  );
+
   static GoRoute _printerRoute({required bool inShell}) => GoRoute(
     name: printer,
     path: '${(inShell ? '_/' : '')}printer',
@@ -756,6 +801,11 @@ class Routes {
   static const reservations = 'reservations';
   static const dayPart = 'dayPart';
   static const aggregatorImport = 'aggregatorImport';
+  static const upiSettings = 'upiSettings';
+  static const dailyReport = 'dailyReport';
+  static const menuEngineering = 'menuEngineering';
+  static const kitchenDisplay = 'kitchenDisplay';
+  static const voiceOrdering = 'voiceOrdering';
   static const menu = 'menu';
   static const menuCatalogCreate = 'menu.catalog.create';
   static const menuCatalogUpdate = 'menu.catalog.update';
