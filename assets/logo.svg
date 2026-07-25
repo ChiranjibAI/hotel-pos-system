@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Gold gradient -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F4D47C"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#B8941F"/>
+    </linearGradient>
+    <!-- Gold glow -->
+    <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background: deep charcoal with rounded corners (app-icon safe area) -->
+  <rect width="512" height="512" rx="112" fill="#1A1A1A"/>
+  <rect width="512" height="512" rx="112" fill="url(#glow)"/>
+
+  <!-- Receipt (left layer) — represents the POS / bill -->
+  <g transform="translate(108, 96)">
+    <!-- Receipt body -->
+    <path d="M0,0 L180,0 L180,300 L160,284 L140,300 L120,284 L100,300 L80,284 L60,300 L40,284 L20,300 L0,284 Z"
+          fill="#262626" stroke="url(#gold)" stroke-width="3"/>
+    <!-- Receipt lines -->
+    <rect x="24" y="40" width="132" height="6" rx="3" fill="url(#gold)" opacity="0.85"/>
+    <rect x="24" y="64" width="100" height="6" rx="3" fill="url(#gold)" opacity="0.55"/>
+    <rect x="24" y="88" width="120" height="6" rx="3" fill="url(#gold)" opacity="0.55"/>
+    <rect x="24" y="112" width="80" height="6" rx="3" fill="url(#gold)" opacity="0.55"/>
+    <!-- Total bar -->
+    <rect x="24" y="148" width="132" height="2" fill="url(#gold)" opacity="0.6"/>
+    <rect x="24" y="164" width="60" height="10" rx="4" fill="url(#gold)" opacity="0.9"/>
+    <rect x="120" y="164" width="36" height="10" rx="4" fill="url(#gold)" opacity="0.9"/>
+  </g>
+
+  <!-- Fork + plate (right layer) — represents the restaurant -->
+  <g transform="translate(250, 150)">
+    <!-- Plate circle -->
+    <circle cx="96" cy="96" r="78" fill="none" stroke="url(#gold)" stroke-width="6"/>
+    <circle cx="96" cy="96" r="58" fill="none" stroke="url(#gold)" stroke-width="2" opacity="0.5"/>
+    <!-- Fork -->
+    <g transform="translate(-8, 24)" stroke="url(#gold)" stroke-width="5" stroke-linecap="round" fill="none">
+      <line x1="10" y1="0" x2="10" y2="144"/>
+      <line x1="0" y1="0" x2="0" y2="36"/>
+      <line x1="20" y1="0" x2="20" y2="36"/>
+      <line x1="0" y1="36" x2="20" y2="36"/>
+    </g>
+  </g>
+</svg>

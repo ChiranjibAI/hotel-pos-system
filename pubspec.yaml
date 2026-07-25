@@ -51,6 +51,7 @@ dependencies:
   image_cropper: ^9.1.0
   cached_network_image: ^3.4.1  # 24, 08-13, downgrade for firebase
   flutter_svg: ^2.2.1  # 25, 06-16
+  google_fonts: ^6.2.1
 
   # Make it easy to test
   file: ^7.0.1  # 24, 10-08
@@ -86,6 +87,9 @@ dev_dependencies:
 
   arb_glue: ^1.0.0
 
+  # app icon + splash generation
+  flutter_launcher_icons: ^0.14.3
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -102,12 +106,31 @@ flutter:
   - assets/feature_request_please.gif
   - assets/google_signin_button.svg
   - assets/excel_icon.svg
+  - assets/logo.png
+  - assets/app_icon.png
+  - assets/splash_logo.png
+
+# flutter pub run flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/app_icon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#1A1A1A"
+  adaptive_icon_foreground: "assets/app_icon.png"
+  remove_alpha_ios: true
 
 # flutter pub run flutter_native_splash:create
 flutter_native_splash:
-  color: "#5c98ff"
+  color: "#1A1A1A"
+  color_dark: "#1A1A1A"
   fullscreen: true
-  image: assets/logo.png
+  image: assets/splash_logo.png
+  image_dark: assets/splash_logo.png
+  android_12:
+    image: assets/splash_logo.png
+    color: "#1A1A1A"
+    icon_background_color: "#1A1A1A"
 
 arb_glue:
   source: assets/l10n
