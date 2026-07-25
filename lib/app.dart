@@ -8,6 +8,7 @@ import 'package:hotel_pos_system/l10n/gen/app_localizations.dart';
 import 'package:hotel_pos_system/services/cache.dart';
 
 import 'constants/app_themes.dart';
+import 'components/app_error_widget.dart';
 import 'main.dart' show firebaseAvailable;
 import 'routes.dart';
 import 'settings/language_setting.dart';
@@ -70,6 +71,12 @@ class App extends StatefulWidget {
           theme: AppThemes.lightTheme,
           darkTheme: AppThemes.darkTheme,
           themeMode: ThemeSetting.instance.value,
+          builder: (context, child) {
+            // Wrap the router's child with an ErrorWidget builder so framework
+            // build errors show our branded screen instead of the red debug page.
+            ErrorWidget.builder = (details) => AppErrorWidget(details: details);
+            return child ?? const SizedBox.shrink();
+          },
         );
       },
     );

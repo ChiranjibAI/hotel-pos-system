@@ -27,6 +27,8 @@ import 'models/repository/tables.dart';
 import 'services/cache.dart';
 import 'services/database.dart';
 import 'services/storage.dart';
+import 'services/backup_service.dart';
+import 'services/error_reporter.dart';
 import 'settings/collect_events_setting.dart';
 import 'settings/settings_provider.dart';
 
@@ -68,9 +70,11 @@ void main() async {
       // Fall back to Flutter's default error handling when Crashlytics is off.
       FlutterError.onError = (details) {
         FlutterError.presentError(details);
-        logutil.Log.out(details.exception.toString(), 'flutter_error');
+        ErrorReporter.instance.record(details.exception, details.stack, context: 'flutter', fatal: true);
+        logutil.Log.out('${details.exception}', 'flutter_error');
       };
       PlatformDispatcher.instance.onError = (error, stack) {
+        ErrorReporter.instance.record(error, stack, context: 'platform');
         logutil.Log.out(error.toString(), 'platform_error');
         return true;
       };
@@ -93,6 +97,9 @@ void main() async {
     await Tables().initialize();
     // Last for setup ingredient and quantity
     await Menu().initialize();
+
+    // Start the local auto-backup service (runs every 12h + once 30s after launch).
+    BackupService.instance.start();
 
     /// Why use provider?
     /// https://stackoverflow.com/questions/57157823/provider-vs-inheritedwidget
@@ -118,6 +125,7 @@ void main() async {
     if (firebaseAvailable) {
       FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     } else {
+      ErrorReporter.instance.record(error, stack, context: 'zone');
       logutil.Log.out(error.toString(), 'zone_error');
     }
   });
