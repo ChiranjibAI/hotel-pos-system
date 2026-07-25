@@ -36,7 +36,7 @@ class EmptyBody extends StatelessWidget {
     this.onPressed,
     this.icon = Icons.inventory_2_outlined,
     this.accentColor,
-  }) : assert(routeName != null || onPressed != null, 'Either routeName or onPressed must be provided');
+  }) : assert(true, '');
 
   @override
   Widget build(BuildContext context) {
@@ -80,14 +80,15 @@ class EmptyBody extends StatelessWidget {
               ),
             ),
           const SizedBox(height: 24),
-          ElevatedButton.icon(
-            key: const Key('empty_body'),
-            onPressed: onPressed ?? () => context.pushNamed(routeName!, pathParameters: pathParameters),
-            icon: const Icon(Icons.add_rounded, size: 20),
-            label: Text(
-              S.emptyBodyAction,
-              style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w700),
-            ),
+          if (routeName != null || onPressed != null)
+            ElevatedButton.icon(
+              key: const Key('empty_body'),
+              onPressed: onPressed ?? () => context.pushNamed(routeName!, pathParameters: pathParameters),
+              icon: const Icon(Icons.add_rounded, size: 20),
+              label: Text(
+                S.emptyBodyAction,
+                style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w700),
+              ),
           ),
         ],
       ),

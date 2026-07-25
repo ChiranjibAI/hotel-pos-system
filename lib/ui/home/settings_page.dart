@@ -136,6 +136,15 @@ class SettingsPage extends StatelessWidget {
               );
             },
           ),
+          // Staff management
+          ListTile(
+            key: const Key('feature.staff'),
+            leading: const Icon(Icons.people_outline),
+            title: const Text('Staff Management'),
+            subtitle: const Text('Add staff, set roles and PINs'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.staff),
+          ),
           const SizedBox(height: kFABSpacing),
         ],
       ),

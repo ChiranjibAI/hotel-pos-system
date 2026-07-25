@@ -58,6 +58,7 @@ import 'package:hotel_pos_system/ui/stock/widgets/stock_ingredient_modal.dart';
 import 'package:hotel_pos_system/ui/stock/widgets/stock_ingredient_restock_modal.dart';
 import 'package:hotel_pos_system/ui/stock/widgets/stock_quantity_modal.dart';
 import 'package:hotel_pos_system/ui/tables/tables_page.dart';
+import 'package:hotel_pos_system/ui/staff/staff_management_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_station.dart';
 
@@ -141,6 +142,7 @@ class Routes {
                       _printerRoute(inShell: false),
                       _quantitiesRoute(inShell: false),
                       _orderAttrsRoute(inShell: false),
+                      _staffRoute(inShell: false),
                       _elfRoute(inShell: false),
                       _transitRoute(inShell: false),
                       _settingsRoute(inShell: false),
@@ -523,6 +525,13 @@ class Routes {
       ),
     ],
   );
+  static GoRoute _staffRoute({required bool inShell}) => GoRoute(
+    name: staff,
+    path: '${(inShell ? '_/' : '')}staff',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const StaffManagementPage(), state), 'Staff'),
+  );
+
   static GoRoute _printerRoute({required bool inShell}) => GoRoute(
     name: printer,
     path: '${(inShell ? '_/' : '')}printer',
@@ -676,6 +685,7 @@ class Routes {
 
   static const others = 'others';
   static const tables = 'tables';
+  static const staff = 'staff';
   static const menu = 'menu';
   static const menuCatalogCreate = 'menu.catalog.create';
   static const menuCatalogUpdate = 'menu.catalog.update';

@@ -16,6 +16,8 @@ import 'settings/settings_provider.dart';
 import 'settings/theme_setting.dart';
 import 'translator.dart';
 import 'ui/onboarding/onboarding_wizard.dart';
+import 'ui/staff/staff_login_page.dart';
+import 'models/repository/staff.dart';
 
 class App extends StatefulWidget {
   static final routeObserver = RouteObserver<ModalRoute<void>>();
@@ -89,8 +91,6 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    // Check if onboarding has been completed. The check runs after the first
-    // frame so the splash screen is visible while we read from the cache.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final completed = Cache.instance.get<bool>('onboarding.completed') ?? false;
       if (mounted && !completed) {
@@ -109,6 +109,21 @@ class _AppState extends State<App> {
         home: OnboardingWizard(
           onComplete: () {
             setState(() => _showOnboarding = false);
+          },
+        ),
+      );
+    }
+    // Staff login gate — shown when staff are configured but no one is logged in.
+    if (StaffSession.instance.requiresLogin) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: !isProd,
+        theme: AppThemes.darkTheme,
+        home: ListenableBuilder(
+          listenable: StaffSession.instance,
+          builder: (context, _) {
+            return StaffSession.instance.requiresLogin
+                ? const StaffLoginPage()
+                : App._buildApp(context);
           },
         ),
       );

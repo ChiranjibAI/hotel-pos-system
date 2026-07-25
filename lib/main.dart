@@ -23,6 +23,7 @@ import 'models/repository/quantities.dart';
 import 'models/repository/replenisher.dart';
 import 'models/repository/seller.dart';
 import 'models/repository/stock.dart';
+import 'models/repository/staff.dart';
 import 'models/repository/tables.dart';
 import 'services/cache.dart';
 import 'services/database.dart';
@@ -95,6 +96,7 @@ void main() async {
     await Analysis().initialize();
     await Printers().initialize();
     await Tables().initialize();
+    await StaffRepository().initialize();
     // Last for setup ingredient and quantity
     await Menu().initialize();
 
@@ -117,6 +119,8 @@ void main() async {
           ChangeNotifierProvider.value(value: Cart.instance),
           ChangeNotifierProvider.value(value: Printers.instance),
           ChangeNotifierProvider.value(value: Tables.instance),
+          ChangeNotifierProvider.value(value: StaffRepository.instance),
+          ChangeNotifierProvider.value(value: StaffSession.instance),
         ],
         child: const App(),
       ),
