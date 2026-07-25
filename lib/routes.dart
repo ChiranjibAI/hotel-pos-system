@@ -63,6 +63,9 @@ import 'package:hotel_pos_system/ui/qr/qr_ordering_page.dart';
 import 'package:hotel_pos_system/ui/reports/gst_report_page.dart';
 import 'package:hotel_pos_system/ui/loyalty/loyalty_page.dart';
 import 'package:hotel_pos_system/ui/costing/recipe_costing_page.dart';
+import 'package:hotel_pos_system/ui/reservations/reservations_page.dart';
+import 'package:hotel_pos_system/ui/reports/day_part_page.dart';
+import 'package:hotel_pos_system/ui/aggregator/aggregator_import_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_station.dart';
 
@@ -151,6 +154,9 @@ class Routes {
                       _qrOrderingRoute(inShell: false),
                       _loyaltyRoute(inShell: false),
                       _recipeCostingRoute(inShell: false),
+                      _reservationsRoute(inShell: false),
+                      _dayPartRoute(inShell: false),
+                      _aggregatorImportRoute(inShell: false),
                       _elfRoute(inShell: false),
                       _transitRoute(inShell: false),
                       _settingsRoute(inShell: false),
@@ -568,6 +574,27 @@ class Routes {
     builder: (ctx, state) => _w(_l(const RecipeCostingPage(), state), 'Recipe Costing'),
   );
 
+  static GoRoute _reservationsRoute({required bool inShell}) => GoRoute(
+    name: reservations,
+    path: '${(inShell ? '_/' : '')}reservations',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const ReservationsPage(), state), 'Reservations'),
+  );
+
+  static GoRoute _dayPartRoute({required bool inShell}) => GoRoute(
+    name: dayPart,
+    path: '${(inShell ? '_/' : '')}daypart',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const DayPartPage(), state), 'Day-Part Analysis'),
+  );
+
+  static GoRoute _aggregatorImportRoute({required bool inShell}) => GoRoute(
+    name: aggregatorImport,
+    path: '${(inShell ? '_/' : '')}aggregator',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const AggregatorImportPage(), state), 'Aggregator Import'),
+  );
+
   static GoRoute _printerRoute({required bool inShell}) => GoRoute(
     name: printer,
     path: '${(inShell ? '_/' : '')}printer',
@@ -726,6 +753,9 @@ class Routes {
   static const qrOrdering = 'qrOrdering';
   static const loyalty = 'loyalty';
   static const recipeCosting = 'recipeCosting';
+  static const reservations = 'reservations';
+  static const dayPart = 'dayPart';
+  static const aggregatorImport = 'aggregatorImport';
   static const menu = 'menu';
   static const menuCatalogCreate = 'menu.catalog.create';
   static const menuCatalogUpdate = 'menu.catalog.update';

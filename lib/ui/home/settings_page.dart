@@ -181,6 +181,33 @@ class SettingsPage extends StatelessWidget {
             trailing: const Icon(Icons.navigate_next_outlined),
             onTap: () => context.pushNamed(Routes.recipeCosting),
           ),
+          // Reservations
+          ListTile(
+            key: const Key('feature.reservations'),
+            leading: const Icon(Icons.event_available_outlined),
+            title: const Text('Reservations'),
+            subtitle: const Text('Manage table bookings and waitlist'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.reservations),
+          ),
+          // Day-Part Analysis
+          ListTile(
+            key: const Key('feature.daypart'),
+            leading: const Icon(Icons.bar_chart_outlined),
+            title: const Text('Day-Part Analysis'),
+            subtitle: const Text('Hourly sales distribution'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.dayPart),
+          ),
+          // Aggregator Import
+          ListTile(
+            key: const Key('feature.aggregator'),
+            leading: const Icon(Icons.delivery_dining_outlined),
+            title: const Text('Aggregator Import'),
+            subtitle: const Text('Import Zomato/Swiggy orders'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.aggregatorImport),
+          ),
           const SizedBox(height: kFABSpacing),
         ],
       ),
