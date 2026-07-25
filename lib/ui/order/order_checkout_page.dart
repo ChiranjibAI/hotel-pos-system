@@ -11,6 +11,8 @@ import 'package:hotel_pos_system/translator.dart';
 import 'package:hotel_pos_system/ui/order/checkout/checkout_cashier_calculator.dart';
 import 'package:hotel_pos_system/ui/order/checkout/checkout_cashier_snapshot.dart';
 import 'package:hotel_pos_system/ui/order/checkout/stashed_order_list_view.dart';
+import 'package:hotel_pos_system/ui/order/widgets/kot_dialog.dart';
+import 'package:hotel_pos_system/ui/order/widgets/split_payment_dialog.dart';
 import 'package:hotel_pos_system/ui/order/widgets/order_object_view.dart';
 
 import 'checkout/checkout_attribute_view.dart';
@@ -85,7 +87,12 @@ class _MobileState extends State<_Mobile> with SingleTickerProviderStateMixin {
         leading: const PopButton(),
         actions: Cart.instance.isEmpty
             ? null
-            : <Widget>[const _StashButton(), _ConfirmButton(price: widget.price, paid: widget.paid)],
+            : <Widget>[
+                const _KotButton(),
+                _SplitPaymentButton(price: widget.price),
+                const _StashButton(),
+                _ConfirmButton(price: widget.price, paid: widget.paid),
+              ],
         bottom: TabBar(
           controller: _controller,
           tabs: [
@@ -220,7 +227,14 @@ class _Desktop extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const PopButton(),
-        actions: Cart.instance.isEmpty ? null : [const _StashButton(), _ConfirmButton(price: price, paid: paid)],
+        actions: Cart.instance.isEmpty
+            ? null
+            : [
+                const _KotButton(),
+                _SplitPaymentButton(price: price),
+                const _StashButton(),
+                _ConfirmButton(price: price, paid: paid),
+              ],
       ),
       body: ListenableBuilder(
         listenable: viewIndex,
@@ -297,6 +311,55 @@ class _StashButton extends StatelessWidget {
       },
       tooltip: S.orderCheckoutActionStash,
       icon: const Icon(Icons.archive_outlined),
+    );
+  }
+}
+
+/// Button that opens the Kitchen Order Ticket (KOT) dialog — a kitchen-only
+/// receipt with no prices, listing items to cook.
+class _KotButton extends StatelessWidget {
+  const _KotButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      key: const Key('order.details.kot'),
+      tooltip: 'Kitchen Order',
+      onPressed: () {
+        final order = Cart.instance.toObject();
+        showDialog(
+          context: context,
+          builder: (context) => KotDialog(order: order),
+        );
+      },
+      icon: const Icon(Icons.restaurant_outlined),
+    );
+  }
+}
+
+/// Button that opens the Split Payment dialog — lets the customer split the
+/// bill across Cash, Card, and UPI, with an optional tip.
+class _SplitPaymentButton extends StatelessWidget {
+  final ValueNotifier<num> price;
+
+  const _SplitPaymentButton({required this.price});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      key: const Key('order.details.split'),
+      tooltip: 'Split Payment',
+      onPressed: () async {
+        final result = await SplitPaymentDialog.show(context, total: price.value);
+        if (result != null && context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Split payment: ${result.lines.length} method(s), change ${result.change.toStringAsFixed(2)}'),
+            ),
+          );
+        }
+      },
+      icon: const Icon(Icons.call_split_outlined),
     );
   }
 }

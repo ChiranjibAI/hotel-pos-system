@@ -57,6 +57,7 @@ import 'package:hotel_pos_system/ui/stock/widgets/replenishment_modal.dart';
 import 'package:hotel_pos_system/ui/stock/widgets/stock_ingredient_modal.dart';
 import 'package:hotel_pos_system/ui/stock/widgets/stock_ingredient_restock_modal.dart';
 import 'package:hotel_pos_system/ui/stock/widgets/stock_quantity_modal.dart';
+import 'package:hotel_pos_system/ui/tables/tables_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_station.dart';
 
@@ -124,6 +125,7 @@ class Routes {
             builder: (context, state, shell) => HomePage(shell: shell, mode: homeMode),
             // the order of this list should follow the order of the tabs
             branches: [
+              StatefulShellBranch(routes: [_tablesRoute]),
               StatefulShellBranch(routes: [_analysisRoute]),
               StatefulShellBranch(routes: [_stockRoute]),
               StatefulShellBranch(routes: [_cashierRoute]),
@@ -163,6 +165,7 @@ class Routes {
             builder: (context, state, shell) => HomePage(shell: shell, mode: homeMode),
             branches: [
               StatefulShellBranch(routes: [_analysisRoute]),
+              StatefulShellBranch(routes: [_tablesRoute]),
               StatefulShellBranch(routes: [_stockRoute]),
               StatefulShellBranch(routes: [_cashierRoute]),
               StatefulShellBranch(routes: [_orderAttrsRoute(inShell: true)]),
@@ -232,6 +235,12 @@ class Routes {
       ),
     ],
   );
+  static final _tablesRoute = GoRoute(
+    name: tables,
+    path: 'tables',
+    pageBuilder: (ctx, state) => NoTransitionPage(child: _l(const TablesPage(), state)),
+  );
+
   static final _stockRoute = GoRoute(
     name: stock,
     path: 'stock',
@@ -666,6 +675,7 @@ class Routes {
   // ==================== Route names ====================
 
   static const others = 'others';
+  static const tables = 'tables';
   static const menu = 'menu';
   static const menuCatalogCreate = 'menu.catalog.create';
   static const menuCatalogUpdate = 'menu.catalog.update';

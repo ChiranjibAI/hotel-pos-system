@@ -300,10 +300,11 @@ class _FlexibleSpace extends StatelessWidget {
   }
 }
 
-const _bottomNavTabs = [_Tab.analysis, _Tab.stock, _Tab.cashier, _Tab.more];
+const _bottomNavTabs = [_Tab.tables, _Tab.analysis, _Tab.stock, _Tab.cashier, _Tab.more];
 
 const _drawerTabs = [
   _Tab.analysis,
+  _Tab.tables,
   _Tab.stock,
   _Tab.cashier,
   _Tab.orderAttributes,
@@ -318,6 +319,7 @@ const _drawerTabs = [
 
 enum _Tab {
   analysis(icon: Icon(Icons.analytics_outlined), selectedIcon: Icon(Icons.analytics), important: true),
+  tables(icon: Icon(Icons.table_restaurant_outlined), selectedIcon: Icon(Icons.table_restaurant), important: true),
   stock(icon: Icon(Icons.inventory_2_outlined), selectedIcon: Icon(Icons.inventory_2), important: true),
   cashier(icon: Icon(Icons.monetization_on_outlined), selectedIcon: Icon(Icons.monetization_on), important: true),
   orderAttributes(icon: Icon(Icons.assignment_ind_outlined), selectedIcon: Icon(Icons.assignment_ind)),
