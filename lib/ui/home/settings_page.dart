@@ -259,6 +259,17 @@ class SettingsPage extends StatelessWidget {
               );
             },
           ),
+          // ===== AI INSIGHTS =====
+          _SectionHeader(title: 'AI Insights'),
+          // Anomaly Detection
+          ListTile(
+            key: const Key('feature.anomaly'),
+            leading: const Icon(Icons.shield_outlined),
+            title: const Text('Anomaly Detection'),
+            subtitle: const Text('Flag suspicious bills, voids, discounts'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.anomaly),
+          ),
           const SizedBox(height: kFABSpacing),
         ],
       ),

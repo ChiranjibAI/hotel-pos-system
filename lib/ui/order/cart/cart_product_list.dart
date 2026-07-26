@@ -7,6 +7,7 @@ import 'package:hotel_pos_system/helpers/util.dart';
 import 'package:hotel_pos_system/models/order/cart_product.dart';
 import 'package:hotel_pos_system/models/repository/cart.dart';
 import 'package:hotel_pos_system/translator.dart';
+import 'package:hotel_pos_system/ui/upsell/upsell_recommendations_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'cart_actions.dart';
@@ -42,6 +43,7 @@ class _CartProductListState extends State<CartProductList> {
           prototypeItem: const ListTile(title: Text('a'), subtitle: Text('a')),
           semanticChildCount: length,
           children: [
+            const UpsellRecommendationsWidget(),
             if (length == 0)
               ListTile(
                 title: Center(child: HintText(S.orderCartSnapshotEmpty)),

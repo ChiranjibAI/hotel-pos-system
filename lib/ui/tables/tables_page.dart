@@ -5,6 +5,7 @@ import 'package:hotel_pos_system/components/style/empty_body.dart';
 import 'package:hotel_pos_system/constants/app_themes.dart';
 import 'package:hotel_pos_system/models/repository/tables.dart';
 import 'package:hotel_pos_system/models/restaurant/table.dart';
+import 'package:hotel_pos_system/ui/tables/widgets/table_turn_badge.dart';
 import 'package:provider/provider.dart';
 
 /// Floor-plan view of all restaurant tables.
@@ -166,6 +167,7 @@ class _TableCard extends StatelessWidget {
                   ),
                 ),
               ),
+              TableTurnBadge(table: table),
             ],
           ),
         ),

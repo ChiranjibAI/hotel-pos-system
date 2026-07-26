@@ -71,6 +71,7 @@ import 'package:hotel_pos_system/ui/reports/daily_report_page.dart';
 import 'package:hotel_pos_system/ui/reports/menu_engineering_page.dart';
 import 'package:hotel_pos_system/ui/kitchen/kitchen_display_page.dart';
 import 'package:hotel_pos_system/ui/voice/voice_ordering_page.dart';
+import 'package:hotel_pos_system/ui/anomaly/anomaly_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_station.dart';
 
@@ -167,6 +168,7 @@ class Routes {
                       _menuEngineeringRoute(inShell: false),
                       _kitchenDisplayRoute(inShell: false),
                       _voiceOrderingRoute(inShell: false),
+                      _anomalyRoute(inShell: false),
                       _elfRoute(inShell: false),
                       _transitRoute(inShell: false),
                       _settingsRoute(inShell: false),
@@ -640,6 +642,13 @@ class Routes {
     builder: (ctx, state) => _w(_l(const VoiceOrderingPage(), state), 'Voice Ordering'),
   );
 
+  static GoRoute _anomalyRoute({required bool inShell}) => GoRoute(
+    name: anomaly,
+    path: '${(inShell ? '_/' : '')}anomaly',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const AnomalyPage(), state), 'Anomaly Detection'),
+  );
+
   static GoRoute _printerRoute({required bool inShell}) => GoRoute(
     name: printer,
     path: '${(inShell ? '_/' : '')}printer',
@@ -806,6 +815,7 @@ class Routes {
   static const menuEngineering = 'menuEngineering';
   static const kitchenDisplay = 'kitchenDisplay';
   static const voiceOrdering = 'voiceOrdering';
+  static const anomaly = 'anomaly';
   static const menu = 'menu';
   static const menuCatalogCreate = 'menu.catalog.create';
   static const menuCatalogUpdate = 'menu.catalog.update';
