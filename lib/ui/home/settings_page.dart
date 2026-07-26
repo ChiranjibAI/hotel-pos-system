@@ -306,6 +306,33 @@ class SettingsPage extends StatelessWidget {
             trailing: const Icon(Icons.navigate_next_outlined),
             onTap: () => context.pushNamed(Routes.llmSettings),
           ),
+          // Demand Forecast
+          ListTile(
+            key: const Key('feature.forecast'),
+            leading: const Icon(Icons.trending_up_outlined),
+            title: const Text('Demand Forecast'),
+            subtitle: const Text('7-day sales prediction'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.forecast),
+          ),
+          // Churn Prediction
+          ListTile(
+            key: const Key('feature.churn'),
+            leading: const Icon(Icons.people_outline),
+            title: const Text('Churn Prediction'),
+            subtitle: const Text('Customers at risk of leaving'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.churn),
+          ),
+          // Sentiment Analysis
+          ListTile(
+            key: const Key('feature.sentiment'),
+            leading: const Icon(Icons.sentiment_satisfied_outlined),
+            title: const Text('Sentiment Analysis'),
+            subtitle: const Text('Analyze customer feedback (EN + Hindi)'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.sentiment),
+          ),
           const SizedBox(height: kFABSpacing),
         ],
       ),

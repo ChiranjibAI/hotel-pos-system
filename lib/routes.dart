@@ -76,6 +76,9 @@ import 'package:hotel_pos_system/ui/ai/owner_chat_page.dart';
 import 'package:hotel_pos_system/ui/ai/llm_settings_page.dart';
 import 'package:hotel_pos_system/ui/ai/menu_description_generator_page.dart';
 import 'package:hotel_pos_system/ui/ai/ai_marketing_page.dart';
+import 'package:hotel_pos_system/ui/ai/forecast_page.dart';
+import 'package:hotel_pos_system/ui/ai/churn_page.dart';
+import 'package:hotel_pos_system/ui/ai/sentiment_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_station.dart';
 
@@ -177,6 +180,9 @@ class Routes {
                       _llmSettingsRoute(inShell: false),
                       _menuDescGenRoute(inShell: false),
                       _aiMarketingRoute(inShell: false),
+                      _forecastRoute(inShell: false),
+                      _churnRoute(inShell: false),
+                      _sentimentRoute(inShell: false),
                       _elfRoute(inShell: false),
                       _transitRoute(inShell: false),
                       _settingsRoute(inShell: false),
@@ -685,6 +691,27 @@ class Routes {
     builder: (ctx, state) => _w(_l(const AiMarketingPage(), state), 'AI Marketing'),
   );
 
+  static GoRoute _forecastRoute({required bool inShell}) => GoRoute(
+    name: forecast,
+    path: '${(inShell ? '_/' : '')}forecast',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const ForecastPage(), state), 'Demand Forecast'),
+  );
+
+  static GoRoute _churnRoute({required bool inShell}) => GoRoute(
+    name: churn,
+    path: '${(inShell ? '_/' : '')}churn',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const ChurnPage(), state), 'Churn Prediction'),
+  );
+
+  static GoRoute _sentimentRoute({required bool inShell}) => GoRoute(
+    name: sentiment,
+    path: '${(inShell ? '_/' : '')}sentiment',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const SentimentPage(), state), 'Sentiment Analysis'),
+  );
+
   static GoRoute _printerRoute({required bool inShell}) => GoRoute(
     name: printer,
     path: '${(inShell ? '_/' : '')}printer',
@@ -856,6 +883,9 @@ class Routes {
   static const llmSettings = 'llmSettings';
   static const menuDescGen = 'menuDescGen';
   static const aiMarketing = 'aiMarketing';
+  static const forecast = 'forecast';
+  static const churn = 'churn';
+  static const sentiment = 'sentiment';
   static const menu = 'menu';
   static const menuCatalogCreate = 'menu.catalog.create';
   static const menuCatalogUpdate = 'menu.catalog.update';
