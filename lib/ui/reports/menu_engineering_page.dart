@@ -5,7 +5,6 @@ import 'package:hotel_pos_system/constants/app_themes.dart';
 import 'package:hotel_pos_system/models/menu/product.dart';
 import 'package:hotel_pos_system/models/repository/menu.dart';
 import 'package:hotel_pos_system/models/repository/seller.dart';
-import 'package:provider/provider.dart';
 
 /// Menu Engineering report — classifies every dish into 4 quadrants:
 ///

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hotel_pos_system/constants/app_themes.dart';
 import 'package:hotel_pos_system/services/cache.dart';
 
 /// UPI settings page — configure the restaurant's UPI ID and payee name

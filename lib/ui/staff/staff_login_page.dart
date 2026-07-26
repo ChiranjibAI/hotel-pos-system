@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hotel_pos_system/constants/app_themes.dart';
 import 'package:hotel_pos_system/models/repository/staff.dart';
-import 'package:hotel_pos_system/models/staff/staff.dart';
 
 /// A PIN-pad login screen shown when staff are configured and no one is
 /// logged in. Displays a numeric keypad, the entered PIN as dots, and
