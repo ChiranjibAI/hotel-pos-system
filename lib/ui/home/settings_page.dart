@@ -261,6 +261,33 @@ class SettingsPage extends StatelessWidget {
           ),
           // ===== AI INSIGHTS =====
           _SectionHeader(title: 'AI Insights'),
+          // Owner Chat (Conversational BI)
+          ListTile(
+            key: const Key('feature.chat'),
+            leading: const Icon(Icons.chat_outlined),
+            title: const Text('Ask Your POS'),
+            subtitle: const Text('Ask questions about your sales, profit'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.ownerChat),
+          ),
+          // AI Marketing
+          ListTile(
+            key: const Key('feature.ai_marketing'),
+            leading: const Icon(Icons.campaign_outlined),
+            title: const Text('AI Marketing'),
+            subtitle: const Text('Generate WhatsApp promos for customers'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.aiMarketing),
+          ),
+          // Menu Description Generator
+          ListTile(
+            key: const Key('feature.menu_desc'),
+            leading: const Icon(Icons.description_outlined),
+            title: const Text('AI Menu Descriptions'),
+            subtitle: const Text('Auto-write appetizing dish descriptions'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.menuDescGen),
+          ),
           // Anomaly Detection
           ListTile(
             key: const Key('feature.anomaly'),
@@ -269,6 +296,15 @@ class SettingsPage extends StatelessWidget {
             subtitle: const Text('Flag suspicious bills, voids, discounts'),
             trailing: const Icon(Icons.navigate_next_outlined),
             onTap: () => context.pushNamed(Routes.anomaly),
+          ),
+          // AI Configuration
+          ListTile(
+            key: const Key('feature.llm_settings'),
+            leading: const Icon(Icons.tune_outlined),
+            title: const Text('AI Configuration'),
+            subtitle: const Text('Configure LLM endpoint (Ollama/OpenAI)'),
+            trailing: const Icon(Icons.navigate_next_outlined),
+            onTap: () => context.pushNamed(Routes.llmSettings),
           ),
           const SizedBox(height: kFABSpacing),
         ],

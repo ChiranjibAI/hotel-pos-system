@@ -72,6 +72,10 @@ import 'package:hotel_pos_system/ui/reports/menu_engineering_page.dart';
 import 'package:hotel_pos_system/ui/kitchen/kitchen_display_page.dart';
 import 'package:hotel_pos_system/ui/voice/voice_ordering_page.dart';
 import 'package:hotel_pos_system/ui/anomaly/anomaly_page.dart';
+import 'package:hotel_pos_system/ui/ai/owner_chat_page.dart';
+import 'package:hotel_pos_system/ui/ai/llm_settings_page.dart';
+import 'package:hotel_pos_system/ui/ai/menu_description_generator_page.dart';
+import 'package:hotel_pos_system/ui/ai/ai_marketing_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_page.dart';
 import 'package:hotel_pos_system/ui/transit/transit_station.dart';
 
@@ -169,6 +173,10 @@ class Routes {
                       _kitchenDisplayRoute(inShell: false),
                       _voiceOrderingRoute(inShell: false),
                       _anomalyRoute(inShell: false),
+                      _ownerChatRoute(inShell: false),
+                      _llmSettingsRoute(inShell: false),
+                      _menuDescGenRoute(inShell: false),
+                      _aiMarketingRoute(inShell: false),
                       _elfRoute(inShell: false),
                       _transitRoute(inShell: false),
                       _settingsRoute(inShell: false),
@@ -649,6 +657,34 @@ class Routes {
     builder: (ctx, state) => _w(_l(const AnomalyPage(), state), 'Anomaly Detection'),
   );
 
+  static GoRoute _ownerChatRoute({required bool inShell}) => GoRoute(
+    name: ownerChat,
+    path: '${(inShell ? '_/' : '')}chat',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const OwnerChatPage(), state), 'Ask Your POS'),
+  );
+
+  static GoRoute _llmSettingsRoute({required bool inShell}) => GoRoute(
+    name: llmSettings,
+    path: '${(inShell ? '_/' : '')}llm-settings',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const LlmSettingsPage(), state), 'AI Configuration'),
+  );
+
+  static GoRoute _menuDescGenRoute({required bool inShell}) => GoRoute(
+    name: menuDescGen,
+    path: '${(inShell ? '_/' : '')}menu-desc',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const MenuDescriptionGeneratorPage(), state), 'AI Menu Descriptions'),
+  );
+
+  static GoRoute _aiMarketingRoute({required bool inShell}) => GoRoute(
+    name: aiMarketing,
+    path: '${(inShell ? '_/' : '')}ai-marketing',
+    parentNavigatorKey: inShell ? null : rootNavigatorKey,
+    builder: (ctx, state) => _w(_l(const AiMarketingPage(), state), 'AI Marketing'),
+  );
+
   static GoRoute _printerRoute({required bool inShell}) => GoRoute(
     name: printer,
     path: '${(inShell ? '_/' : '')}printer',
@@ -816,6 +852,10 @@ class Routes {
   static const kitchenDisplay = 'kitchenDisplay';
   static const voiceOrdering = 'voiceOrdering';
   static const anomaly = 'anomaly';
+  static const ownerChat = 'ownerChat';
+  static const llmSettings = 'llmSettings';
+  static const menuDescGen = 'menuDescGen';
+  static const aiMarketing = 'aiMarketing';
   static const menu = 'menu';
   static const menuCatalogCreate = 'menu.catalog.create';
   static const menuCatalogUpdate = 'menu.catalog.update';
